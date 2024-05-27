@@ -7,12 +7,10 @@ namespace University.DataAccess.Repositories
     public class ExamRepository(UniversityContext context) : BaseThreeFkJoinTableRepository<Exam>(context)
     {
         public override async Task<IReadOnlyList<Exam>> GetAllAsync()
-          => await Context.Exams.Include(e => e.Student).Include(e => e.Professor).Include(e => e.Subject).ToListAsync();
+            => await Context.Exams.Include(e => e.Student).Include(e => e.Professor).Include(e => e.Subject).ToListAsync();
 
-        public override async Task<Exam?> GetByIdAsync(int studentId, int professorId, int subjectId)
-        {
-            return await Context.Exams.Include(e => e.Student).Include(e => e.Subject).FirstOrDefaultAsync(e => e.StudentId == studentId && e.ProfessorId == professorId && e.SubjectId == subjectId);
-        }
+        public override async Task<Exam?> GetByIdAsync(long studentId, long professorId, long subjectId)
+            => await Context.Exams.Include(e => e.Student).Include(e => e.Subject).FirstOrDefaultAsync(e => e.StudentId == studentId && e.ProfessorId == professorId && e.SubjectId == subjectId);
 
         public override async Task<int> InsertAsync(Exam toInsert)
         {
@@ -38,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int studentId, int professorId, int subjectId)
+        public override async Task DeleteByIdAsync(long studentId, long professorId, long subjectId)
         {
             Exam? toDelete = await GetByIdAsync(studentId, professorId, subjectId);
             if (toDelete is not null)

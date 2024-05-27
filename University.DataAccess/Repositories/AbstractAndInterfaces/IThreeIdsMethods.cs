@@ -2,8 +2,8 @@
 {
     internal interface IThreeIdsMethods<T>
     {
-        Task<T?> GetByIdAsync(int id1, int id2, int id3);
+        Task<T?> GetByIdAsync(long id1, long id2, long id3);
 
-        Task DeleteByIdAsync(int id1, int id2, int id3);
+        Task DeleteByIdAsync(long id1, long id2, long id3);
     }
 }

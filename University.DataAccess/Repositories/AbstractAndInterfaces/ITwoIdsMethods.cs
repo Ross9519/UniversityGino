@@ -2,8 +2,8 @@
 {
     internal interface ITwoIdsMethods<T>
     {
-        Task<T?> GetByIdAsync(int id1, int id2);
+        Task<T?> GetByIdAsync(long id1, long id2);
 
-        Task DeleteByIdAsync(int id1, int id2);
+        Task DeleteByIdAsync(long id1, long id2);
     }
 }

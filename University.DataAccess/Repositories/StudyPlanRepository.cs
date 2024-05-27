@@ -7,9 +7,9 @@ namespace University.DataAccess.Repositories
     public class StudyPlanRepository(UniversityContext context) : BaseTwoFkJoinTableRepository<StudyPlan>(context)
     {
         public override async Task<IReadOnlyList<StudyPlan>> GetAllAsync()
-          => await Context.StudyPlans.Include(s => s.Student).Include(s => s.Subject).ToListAsync();
+            => await Context.StudyPlans.Include(s => s.Student).Include(s => s.Subject).ToListAsync();
 
-        public override async Task<StudyPlan?> GetByIdAsync(int studentId, int subjectId)
+        public override async Task<StudyPlan?> GetByIdAsync(long studentId, long subjectId)
             => await Context.StudyPlans.Include(s => s.Student).Include(s => s.Subject).FirstOrDefaultAsync(s => s.StudentId == studentId && s.SubjectId == subjectId);
 
         public override async Task<int> InsertAsync(StudyPlan toInsert)
@@ -36,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int studentId, int subjectId)
+        public override async Task DeleteByIdAsync(long studentId, long subjectId)
         {
             StudyPlan? toDelete = await GetByIdAsync(studentId, subjectId);
             if (toDelete is not null)

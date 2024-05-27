@@ -2,8 +2,8 @@
 {
     internal interface ISingleIdMethods<T>
     {
-        Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(long id);
 
-        Task DeleteByIdAsync(int id);
+        Task DeleteByIdAsync(long id);
     }
 }

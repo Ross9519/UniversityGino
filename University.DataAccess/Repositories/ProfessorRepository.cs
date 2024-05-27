@@ -9,7 +9,7 @@ namespace University.DataAccess.Repositories
         public override async Task<IReadOnlyList<Professor>> GetAllAsync()
             => await Context.Professors.Include(p => p.Subject).Include(p => p.Exams).ToListAsync();
 
-        public override async Task<Professor?> GetByIdAsync(int id)
+        public override async Task<Professor?> GetByIdAsync(long id)
             => await Context.Professors.Include(p => p.Subject).Include(p => p.Exams).FirstOrDefaultAsync(s => s.Id == id);
 
         public override async Task<int> InsertAsync(Professor toInsert)
@@ -36,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int id)
+        public override async Task DeleteByIdAsync(long id)
         {
             Professor? toDeactivate = await GetByIdAsync(id);
             if (toDeactivate is not null)

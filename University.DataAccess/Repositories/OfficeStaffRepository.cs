@@ -7,9 +7,9 @@ namespace University.DataAccess.Repositories
     public class OfficeStaffRepository(UniversityContext context) : BaseEntityRepository<OfficeStaff>(context)
     {
         public override async Task<IReadOnlyList<OfficeStaff>> GetAllAsync()
-           => await Context.OfficeStaff.ToListAsync();
+            => await Context.OfficeStaff.ToListAsync();
 
-        public override async Task<OfficeStaff?> GetByIdAsync(int id)
+        public override async Task<OfficeStaff?> GetByIdAsync(long id)
             => await Context.OfficeStaff.FirstOrDefaultAsync(s => s.Id == id);
 
         public override async Task<int> InsertAsync(OfficeStaff toInsert)
@@ -36,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int id)
+        public override async Task DeleteByIdAsync(long id)
         {
             OfficeStaff? toDeactivate = await GetByIdAsync(id);
             if (toDeactivate is not null)

@@ -7,9 +7,9 @@ namespace University.DataAccess.Repositories
     public class SubjectRepository(UniversityContext context) : BaseEntityRepository<Subject>(context)
     {
         public override async Task<IReadOnlyList<Subject>> GetAllAsync()
-           => await Context.Subjects.Include(s => s.Professor).Include(s => s.StudyPlans).Include(s => s.Exams).ToListAsync();
+            => await Context.Subjects.Include(s => s.Professor).Include(s => s.StudyPlans).Include(s => s.Exams).ToListAsync();
 
-        public override async Task<Subject?> GetByIdAsync(int id)
+        public override async Task<Subject?> GetByIdAsync(long id)
             => await Context.Subjects.Include(s => s.Professor).Include(s => s.StudyPlans).Include(s => s.Exams).FirstOrDefaultAsync(s => s.Id == id);
 
         public override async Task<int> InsertAsync(Subject toInsert)
@@ -36,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int id)
+        public override async Task DeleteByIdAsync(long id)
         {
             Subject? toDelete = await GetByIdAsync(id);
             if (toDelete is not null)

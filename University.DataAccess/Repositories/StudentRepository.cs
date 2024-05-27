@@ -7,10 +7,10 @@ namespace University.DataAccess.Repositories
     public class StudentRepository(UniversityContext context) : BaseEntityRepository<Student>(context)
     {
         public override async Task<IReadOnlyList<Student>> GetAllAsync()
-            => await Context.Students.Include(s => s.StudyPlans).Include(s => s.Exams).ToListAsync();
+            => await Context.Students.Include(s => s.StudyPlans).Include(s => s.Exams).Where(s => s.Active == true).ToListAsync();
 
-        public override async Task<Student?> GetByIdAsync(int id)
-            => await Context.Students.Include(s => s.StudyPlans).Include(s => s.Exams).FirstOrDefaultAsync(s => s.Id == id);
+        public override async Task<Student?> GetByIdAsync(long id)
+            => await Context.Students.Include(s => s.StudyPlans).Include(s => s.Exams).SingleOrDefaultAsync(s => s.Id == id && s.Active == true);
 
         public override async Task<int> InsertAsync(Student toInsert)
         {
@@ -36,7 +36,7 @@ namespace University.DataAccess.Repositories
             return await Context.SaveChangesAsync();
         }
 
-        public override async Task DeleteByIdAsync(int id)
+        public override async Task DeleteByIdAsync(long id)
         {
             Student? toDeactivate = await GetByIdAsync(id);
             if (toDeactivate is not null)
